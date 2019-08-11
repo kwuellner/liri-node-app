@@ -1,6 +1,5 @@
 require("dotenv").config();
 
-var inquirer = require('inquirer');
 var axios = require("axios");
 var moment = require("moment");
 var fs = require("fs");
@@ -18,7 +17,7 @@ function concertThis(artist) {
 
     var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"
 
-    request(queryURL, function (error, response, body) {
+    axios.get(queryURL, function (error, response, body) {
         if (!error && response.statusCode === 200) {
             var concertInfo = JSON.parse(body);
 
@@ -71,7 +70,7 @@ function movieThis(movieSearch) {
 
     var queryURL = "http://www.omdbapi.com/?t=" + movieSearch + "&y=&plot=short&apikey=trilogy";
 
-    request(queryURL, function (error, response, body) {
+    axios.get(queryURL, function (error, response, body) {
 
         if (!error && response.statusCode === 200) {
 
@@ -89,27 +88,27 @@ function movieThis(movieSearch) {
                 "\n======================");
         };
     });
-
-    // switch actions for functions
-    var ask = function (actions, dataLog) {
-        switch (actions) {
-            case "concert-this":
-                concertThis(dataLog);
-                break;
-            case "movie-this":
-                movieThis(dataLog);
-                break;
-            case "spotify-this-song":
-                spotifyThis(dataLog);
-                break;
-            case "do-what-it-says":
-                doWhatItSays();
-                break;
-            default:
-                console.log("Invalid. Please try again");
-        }
-    };
 }
+// switch actions for functions
+var ask = function (actions, dataLog) {
+    switch (actions) {
+        case "concert-this":
+            concertThis(dataLog);
+            break;
+        case "movie-this":
+            movieThis(dataLog);
+            break;
+        case "spotify-this-song":
+            spotifyThis(dataLog);
+            break;
+        case "do-what-it-says":
+            doWhatItSays();
+            break;
+        default:
+            console.log("Invalid. Please try again");
+    }
+};
+
 
 var doWhatItSays = function () {
     fs.readFile("random.txt", "utf8", function (err, data) {
@@ -123,5 +122,7 @@ var doWhatItSays = function () {
             ask(randomText[0]);
         }
     });
+
+    ask(search, input);
 }
 
