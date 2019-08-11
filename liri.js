@@ -13,24 +13,6 @@ var spotify = new Spotify(keys.spotify)
 var search = process.argv[2];
 var input = process.argv[3];
 
-// beginning questions
-// inquirer.prompt([
-//     {
-//         type: "input",
-//         name: "name",
-//         message: "What is your name?"
-//     },
-
-//     {
-//         type: "list",
-//         name: "whichApp",
-//         message: "Which application would you like to run?",
-//         choice: ["Spotify", "OMBD", "BandsInTown"]
-//     },
-// ])
-// .then(function (user) {
-
-
 //concert-this
 function concertThis(artist) {
 
