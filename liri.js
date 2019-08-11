@@ -30,6 +30,7 @@ var input = process.argv[3];
 // ])
 // .then(function (user) {
 
+
 //concert-this
 function concertThis(artist) {
 
@@ -78,3 +79,67 @@ function spotifyThis(songSearch) {
             };
         });
 }
+
+// movie-this
+function movieThis(movieSearch) {
+
+    if (movieSearch === undefined || null) {
+        movieSearch = "Mr Nobody";
+    }
+
+    var queryURL = "http://www.omdbapi.com/?t=" + movieSearch + "&y=&plot=short&apikey=trilogy";
+
+    request(queryURL, function (error, response, body) {
+
+        if (!error && response.statusCode === 200) {
+
+            var movieData = JSON.parse(body);
+
+            console.log("======================");
+            console.log("Title: " + movieData.title +
+                "\nYear: " + movieData.released +
+                "\nIMDB Rating: " + movieData.imdbRating +
+                "\nRotten Tomatoes Rating: " + movieData.Ratings[1].Value +
+                "\nCountry: " + movieData.country +
+                "\nLanguage: " + movieData.language +
+                "\nPlot: " + movieData.plot +
+                "\nActors: " + movieData.actors +
+                "\n======================");
+        };
+    });
+
+    // switch actions for functions
+    var ask = function (actions, dataLog) {
+        switch (actions) {
+            case "concert-this":
+                concertThis(dataLog);
+                break;
+            case "movie-this":
+                movieThis(dataLog);
+                break;
+            case "spotify-this-song":
+                spotifyThis(dataLog);
+                break;
+            case "do-what-it-says":
+                doWhatItSays();
+                break;
+            default:
+                console.log("Invalid. Please try again");
+        }
+    };
+}
+
+var doWhatItSays = function () {
+    fs.readFile("random.txt", "utf8", function (err, data) {
+        if (err) throw err;
+        var randomText = data.split(",");
+
+        if (randomText.length == 2) {
+            ask(randomText[0]);
+        }
+        else if (randomText.length == 1) {
+            ask(randomText[0]);
+        }
+    });
+}
+
