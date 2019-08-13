@@ -2,7 +2,7 @@
 
 Search for bands in town, a song on Spotify or get info on a certain movie.
 
-*Could not get the program to run but this is how it should run*
+[LIRI Demo](https://drive.google.com/file/d/1u_57s2EXEftbbQpjze_sUCWXvWi40c7y/view)
 
 ## How to use
 Use node to run this program. Use node liri.js then run one of the following commands, then add search text:
